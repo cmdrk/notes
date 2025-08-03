@@ -1,7 +1,7 @@
 ---
 title: Debian VM Installation on FreeBSD
 ---
-### Installation
+## Installation
 
 Download the ISO:
 
@@ -45,8 +45,31 @@ vm console deb-base
 
 To exit the console, try `~^D` (tilde, plus CTRL-D). This seems superior to `~.` because the latter will be intercepted by SSH first, and you can kick yourself out of your working session.
 
-### Using BHyve in anger
-#### Hard killing a VM
+## Post-install Configuration
+I usually put the bare minimum tools and configuration  I want into place after installing. 2 things I would do up front: install and configure `sudo`, and put my SSH key into place
+
+```bash
+apt update
+apt upgrade
+apt install sudo
+```
+
+I usually add an entry at the bottom of the `/etc/sudoers` file (either via `vi /etc/sudoers` or `visudo`) like so:
+
+```bash
+lincoln ALL=(ALL) NOPASSWD: ALL
+```
+
+To copy the key in place, I usually do something like this from the host machine:
+```bash
+ssh lincoln@<VM IP> mkdir .ssh
+scp ~/.ssh/id_ecdsa.pub lincoln@<VM IP>:~/.ssh/authorized_keys
+```
+
+Now all cloned VMs will have my key on them and sudo prepared.
+
+## Using BHyve in anger
+### Hard killing a VM
 If you have to hard-kill a VM: 
  - You can kill the process in the usual way (e.g., `kill <vm pid>`, perhaps `kill -9`
  - If necesasry, remove the lockfile in the VM's configuration directory (e.g. `/mnt/vm/debian/run.lock` in my case)

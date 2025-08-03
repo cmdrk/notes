@@ -1,4 +1,6 @@
 ---
 title: Landing Page
 ---
-Instructions for BHyve: [[debian-vm-on-freebsd|Debian VM Installation on FreeBSD]]
+* [[debian-vm-on-freebsd|Debian VM Installation on FreeBSD]]
+* [[preparing-a-debian-homelab|Building a Debian-based HPC Home Lab]]
+
