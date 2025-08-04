@@ -38,6 +38,20 @@ twice).
 
 
 ## LLDAP setup on Debian 12
+LLDAP is incredibly straight-forward to setup. Since I'm using Debian, I will use the packages from the OpenSUSE build service as such:
+```bash
+apt install curl gpg
+echo 'deb http://download.opensuse.org/repositories/home:/Masgalor:/LLDAP/Debian_12/ /' | tee /etc/apt/sources.list.d/home:Masgalor:LLDAP.list
+curl -fsSL https://download.opensuse.org/repositories/home:Masgalor:LLDAP/Debian_12/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/home_Masgalor_LLDAP.gpg > /dev/null
+apt update
+apt install lldap
+```
+
+Once it's installed, fire it up:
+```bash
+systemctl enable lldap --now
+```
+
 
 ## Dex
 Most of my experience is with [Keycloak](https://www.keycloak.org/), the open
