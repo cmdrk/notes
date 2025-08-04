@@ -52,6 +52,39 @@ Once it's installed, fire it up:
 systemctl enable lldap --now
 ```
 
+## Ansible configuration
+
+Similar to my other notes, here's an ansible version of the same thing:
+
+```yaml
+- name: idm
+  hosts: idm
+  handlers:
+    - name: restart lldap
+      ansible.builtin.service:
+        name: lldap
+        state: restarted
+  tasks:
+    - name: insert lldap apt source
+      ansible.builtin.copy:
+        src: files/repos/home:Masgalor:LLDAP.list
+        dest: /etc/apt/sources.list.d/home:Masgalor:LLDAP.list
+    - name: insert lldap repo gpg key
+      ansible.builtin.copy:
+        src: files/repos/home_Masgalor_LLDAP.gpg
+        dest: /etc/apt/trusted.gpg.d/home_Masgalor_LLDAP.gpg
+    - name: configure lldap
+      ansible.builtin.copy:
+        src: files/lldap/lldap_config.toml
+        dest: /etc/lldap/lldap_config.toml
+      notify:
+        - restart lldap
+    - name: install lldap
+      apt:
+        name:
+        - lldap
+```
+
 
 ## Dex
 Most of my experience is with [Keycloak](https://www.keycloak.org/), the open
