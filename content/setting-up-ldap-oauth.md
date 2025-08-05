@@ -36,6 +36,18 @@ For my home lab, I've decided to check out a simplified LDAP implementation
 called [LLDAP](https://github.com/lldap/lldap) (yes, so light they say it
 twice). 
 
+Since I've extolled the virtues of Kanidm, you might be wondering why I didn't
+pick it for this project. A couple of reasons:
+
+    1. I wanted to do this project sans Docker, and Kani seems to only have
+       Docker as a deployment option. Understandable, but I'm a little burnt
+       out on the Cloud Native world to be honest.
+    2. Kani's security focus is laudable, but I'm taking some shortcuts for a
+       lab environment that is never exposed to the WAN. Yes.. I know, defense
+       in depth, etc.
+    3. While Kani's Oauth2 implementation would probably work with my Open
+       OnDemand environment, but I don't want to go too far off of the beaten
+       path.
 
 ## LLDAP setup on Debian 12
 LLDAP is incredibly straight-forward to setup. Since I'm using Debian, I will use the packages from the OpenSUSE build service as such:
@@ -85,6 +97,15 @@ Similar to my other notes, here's an ansible version of the same thing:
         - lldap
 ```
 
+## Creating users
+
+Once LLDAP was up and running, I visited the web portal at `lldap:17170` and
+changed the default credentials for the admin user, logged in, and created
+myself a user.
+
+![[images/lldap-config.png]]
+
+## Testing LLDAP with SSSD 
 
 ## Dex
 Most of my experience is with [Keycloak](https://www.keycloak.org/), the open
